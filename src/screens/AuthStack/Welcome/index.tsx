@@ -9,7 +9,7 @@ const Welcome = ({ navigation }: Props) => {
   };
 
   const navigateToRegistration = () => {
-    navigation.navigate('Login');
+    navigation.navigate('Register');
   };
 
   return (
