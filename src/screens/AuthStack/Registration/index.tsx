@@ -2,12 +2,17 @@ import RegistrationView from './RegistrationView';
 import { RefObject, useCallback, useRef } from 'react';
 import { TextInput } from 'react-native';
 import { FormDataItems } from '../../../types/global';
+import subYears from 'date-fns/subYears';
+
+const now = new Date();
+const minDate = subYears(new Date(), 100);
+const maxDate = subYears(new Date(), 18);
+const defaultDate = subYears(now, 25);
 
 const Registration = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const repeatPasswordInputRef = useRef<TextInput>(null);
-  const datePickerRef = useRef<TextInput>(null);
 
   const onSubmitEditing = useCallback(
     (ref: RefObject<TextInput>) => () => {
@@ -58,7 +63,6 @@ const Registration = () => {
         placeholder: 'Password',
         inputRef: passwordInputRef,
         onSubmitEditing: onSubmitEditing(repeatPasswordInputRef),
-        autoComplete: 'password',
         selectTextOnFocus: true,
         autoCorrect: false,
         secureTextEntry: true,
@@ -73,23 +77,20 @@ const Registration = () => {
       inputProps: {
         placeholder: 'Repeat password',
         inputRef: repeatPasswordInputRef,
-        onSubmitEditing: onSubmitEditing(datePickerRef),
-        autoComplete: 'new-password',
         selectTextOnFocus: true,
         autoCorrect: false,
         secureTextEntry: true,
-        enterKeyHint: 'next',
       },
     },
     {
       fieldName: 'datePicker',
       isRequired: true,
       type: 'datePicker',
-      defaultValue: '',
+      defaultValue: defaultDate,
       inputProps: {
         placeholder: 'Date of Birth',
-        inputRef: datePickerRef,
-        autoCorrect: false,
+        maximumDate: minDate,
+        minimumDate: maxDate,
       },
     },
     {

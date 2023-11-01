@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Input } from '../components';
+import { Button, DatePicker, Input } from '../components';
 import { FormDataItems } from '../types/global';
 import { KeyboardAvoidingWrapper } from '../hocs';
 import CheckBox from '../components/Checkbox';
@@ -16,7 +16,7 @@ export default function Form(props: Props) {
   const { onSubmit, formDataItems, formWrapperStyle = {} } = props;
 
   const defaultValues = formDataItems.reduce(
-    (acc: Record<string, string | boolean>, formDataItem) => {
+    (acc: Record<string, string | boolean | Date>, formDataItem) => {
       acc[formDataItem.fieldName] = formDataItem.defaultValue || '';
 
       return acc;
@@ -47,12 +47,11 @@ export default function Form(props: Props) {
                 render={({ field: { onChange, onBlur, value } }) => {
                   if (type === 'datePicker') {
                     return (
-                      <Input
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value as string}
-                        inputWrapperStyle={styles.formItem}
-                        {...inputProps}
+                      <DatePicker
+                        wrapperStyle={styles.formItem}
+                        date={value as Date}
+                        placeholder={inputProps.placeholder}
+                        onConfirm={onChange}
                       />
                     );
                   }
