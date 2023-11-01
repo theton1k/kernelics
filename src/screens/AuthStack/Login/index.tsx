@@ -21,6 +21,7 @@ const Login = () => {
       fieldName: 'email',
       isRequired: true,
       type: 'input',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Email',
         onSubmitEditing: onSubmitEmail,
@@ -34,6 +35,7 @@ const Login = () => {
       fieldName: 'password',
       isRequired: true,
       type: 'input',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Password',
         inputRef: passwordInputRef,

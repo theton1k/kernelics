@@ -25,6 +25,7 @@ const Registration = () => {
       fieldName: 'fullName',
       isRequired: true,
       type: 'input',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Full name',
         onSubmitEditing: onSubmitEditing(emailInputRef),
@@ -37,6 +38,7 @@ const Registration = () => {
       fieldName: 'email',
       isRequired: true,
       type: 'input',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Email',
         inputRef: emailInputRef,
@@ -51,6 +53,7 @@ const Registration = () => {
       fieldName: 'password',
       isRequired: true,
       type: 'input',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Password',
         inputRef: passwordInputRef,
@@ -66,6 +69,7 @@ const Registration = () => {
       fieldName: 'repeatPassword',
       isRequired: true,
       type: 'input',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Repeat password',
         inputRef: repeatPasswordInputRef,
@@ -81,10 +85,30 @@ const Registration = () => {
       fieldName: 'datePicker',
       isRequired: true,
       type: 'datePicker',
+      defaultValue: '',
       inputProps: {
         placeholder: 'Date of Birth',
         inputRef: datePickerRef,
         autoCorrect: false,
+      },
+    },
+    {
+      fieldName: 'T&C',
+      isRequired: true,
+      type: 'checkbox',
+      defaultValue: false,
+      inputProps: {
+        placeholder: 'I agree to Terms and Conditions',
+      },
+    },
+    {
+      fieldName: 'ads',
+      isRequired: false,
+      type: 'checkbox',
+      defaultValue: false,
+      inputProps: {
+        placeholder:
+          'I agree to receive ads and promotional material on the given email address',
       },
     },
   ];

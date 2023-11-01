@@ -14,6 +14,7 @@ import { eyeImage, eyeOutlineImage } from '../assets/images';
 export type InputProps = Omit<TextInputProps, 'style'> & {
   inputWrapperStyle?: ViewStyle;
   inputRef?: React.RefObject<TextInput>;
+  error?: boolean;
 };
 
 const Input = (props: InputProps) => {
@@ -22,6 +23,7 @@ const Input = (props: InputProps) => {
     secureTextEntry,
     inputRef,
     onSubmitEditing,
+    error,
     ...inputProps
   } = props;
 
@@ -39,7 +41,7 @@ const Input = (props: InputProps) => {
 
   return (
     <Pressable
-      style={[styles.inputWrapper, inputWrapperStyle]}
+      style={[styles.inputWrapper, inputWrapperStyle, error && styles.error]}
       onPress={() => {
         ref?.current?.focus();
       }}>
@@ -78,6 +80,9 @@ const styles = StyleSheet.create({
   passwordEye: {
     width: 24,
     height: 24,
+  },
+  error: {
+    borderColor: colors.error,
   },
 });
 

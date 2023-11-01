@@ -3,6 +3,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Input } from '../components';
 import { FormDataItems } from '../types/global';
 import { KeyboardAvoidingWrapper } from '../hocs';
+import CheckBox from '../components/Checkbox';
+import { colors } from '../theme';
 
 type Props = {
   formDataItems: FormDataItems;
@@ -14,7 +16,7 @@ export default function Form(props: Props) {
   const { onSubmit, formDataItems, formWrapperStyle = {} } = props;
 
   const defaultValues = formDataItems.reduce(
-    (acc: Record<string, string>, formDataItem) => {
+    (acc: Record<string, string | boolean>, formDataItem) => {
       acc[formDataItem.fieldName] = formDataItem.defaultValue || '';
 
       return acc;
@@ -48,21 +50,25 @@ export default function Form(props: Props) {
                       <Input
                         onBlur={onBlur}
                         onChangeText={onChange}
-                        value={value}
-                        inputWrapperStyle={styles.inputWrapperStyle}
+                        value={value as string}
+                        inputWrapperStyle={styles.formItem}
                         {...inputProps}
                       />
                     );
                   }
 
                   if (type === 'checkbox') {
+                    const customChange = () => {
+                      onChange(!value);
+                    };
+
                     return (
-                      <Input
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        inputWrapperStyle={styles.inputWrapperStyle}
-                        {...inputProps}
+                      <CheckBox
+                        value={value as boolean}
+                        onChange={customChange}
+                        placeholder={inputProps.placeholder}
+                        checkboxWrapperStyle={styles.formItem}
+                        error={!!errors[fieldName]}
                       />
                     );
                   }
@@ -71,16 +77,19 @@ export default function Form(props: Props) {
                     <Input
                       onBlur={onBlur}
                       onChangeText={onChange}
-                      value={value}
-                      inputWrapperStyle={styles.inputWrapperStyle}
+                      value={value as string}
+                      inputWrapperStyle={styles.formItem}
                       {...inputProps}
+                      error={!!errors[fieldName]}
                     />
                   );
                 }}
                 name={fieldName}
               />
 
-              {errors[fieldName] && <Text>This is required.</Text>}
+              {errors[fieldName] && (
+                <Text style={styles.errorText}>This is required.</Text>
+              )}
             </View>
           );
         })}
@@ -102,7 +111,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexGrow: 1,
   },
-  inputWrapperStyle: {
+  formItem: {
+    marginBottom: 12,
+  },
+  errorText: {
+    color: colors.error,
     marginBottom: 12,
   },
 });

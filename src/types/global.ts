@@ -9,6 +9,6 @@ export type FormDataItems = {
   fieldName: string;
   isRequired: boolean;
   type: FormDataItemType;
-  defaultValue?: string;
+  defaultValue?: string | boolean;
   inputProps: InputProps;
 }[];
