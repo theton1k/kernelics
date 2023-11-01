@@ -1,19 +1,30 @@
 import RegistrationView from './RegistrationView';
 import { RefObject, useCallback, useRef } from 'react';
-import { TextInput } from 'react-native';
+import { Alert, TextInput } from 'react-native';
 import { FormDataItems } from '../../../types/global';
 import subYears from 'date-fns/subYears';
 import * as yup from 'yup';
+import {
+  formActions,
+  RegistrationForm,
+} from '../../../store/reducers/formData';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { toDate } from 'date-fns';
 
 const now = new Date();
-const minDate = subYears(new Date(), 100);
-const maxDate = subYears(new Date(), 18);
+
 const defaultDate = subYears(now, 25);
+const minDate = subYears(now, 100);
+const maxDate = subYears(now, 18);
 
 const Registration = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const repeatPasswordInputRef = useRef<TextInput>(null);
+
+  const dispatch = useAppDispatch();
+
+  const storedData = useAppSelector(state => state.form.registration);
 
   const onSubmitEditing = useCallback(
     (ref: RefObject<TextInput>) => () => {
@@ -24,16 +35,23 @@ const Registration = () => {
     [],
   );
 
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(
+    (formData: RegistrationForm) => {
+      dispatch(formActions.setRegistrationForm(formData));
+
+      Alert.alert('Success');
+    },
+    [dispatch],
+  );
 
   const formDataItems: FormDataItems = [
     {
       fieldName: 'name',
       isRequired: true,
       type: 'input',
-      defaultValue: '',
+      defaultValue: storedData.name,
       inputProps: {
-        placeholder: 'Full name',
+        placeholder: 'Full Name',
         onSubmitEditing: onSubmitEditing(emailInputRef),
         autoComplete: 'name',
         autoCorrect: true,
@@ -44,7 +62,7 @@ const Registration = () => {
       fieldName: 'email',
       isRequired: true,
       type: 'input',
-      defaultValue: '',
+      defaultValue: storedData.email,
       inputProps: {
         placeholder: 'Email',
         inputRef: emailInputRef,
@@ -59,7 +77,7 @@ const Registration = () => {
       fieldName: 'password',
       isRequired: true,
       type: 'input',
-      defaultValue: '',
+      defaultValue: storedData.password,
       inputProps: {
         placeholder: 'Password',
         inputRef: passwordInputRef,
@@ -75,9 +93,9 @@ const Registration = () => {
       fieldName: 'repeatPassword',
       isRequired: true,
       type: 'input',
-      defaultValue: '',
+      defaultValue: storedData.repeatPassword,
       inputProps: {
-        placeholder: 'Repeat password',
+        placeholder: 'Repeat Password',
         inputRef: repeatPasswordInputRef,
         selectTextOnFocus: true,
         autoCorrect: false,
@@ -89,7 +107,9 @@ const Registration = () => {
       fieldName: 'birthDay',
       isRequired: true,
       type: 'datePicker',
-      defaultValue: defaultDate,
+      defaultValue: storedData.birthDay
+        ? toDate(storedData.birthDay)
+        : defaultDate,
       inputProps: {
         placeholder: 'Date of Birth',
         maximumDate: minDate,

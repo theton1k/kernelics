@@ -1,11 +1,17 @@
 import LoginView from './LoginView';
 import { useCallback, useRef } from 'react';
-import { TextInput } from 'react-native';
+import { Alert, TextInput } from 'react-native';
 import { FormDataItems } from '../../../types/global';
 import * as yup from 'yup';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { formActions, LoginForm } from '../../../store/reducers/formData';
 
 const Login = () => {
   const passwordInputRef = useRef<TextInput>(null);
+
+  const dispatch = useAppDispatch();
+
+  const storedData = useAppSelector(state => state.form.login);
 
   const onSubmitEmail = useCallback(() => {
     if (!passwordInputRef.current) {
@@ -15,14 +21,21 @@ const Login = () => {
     passwordInputRef.current.focus();
   }, []);
 
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(
+    (data: LoginForm) => {
+      dispatch(formActions.setLoginForm(data));
+
+      Alert.alert('Success');
+    },
+    [dispatch],
+  );
 
   const formDataItems: FormDataItems = [
     {
       fieldName: 'email',
       isRequired: true,
       type: 'input',
-      defaultValue: '',
+      defaultValue: storedData.email,
       inputProps: {
         placeholder: 'Email',
         onSubmitEditing: onSubmitEmail,
@@ -36,7 +49,7 @@ const Login = () => {
       fieldName: 'password',
       isRequired: true,
       type: 'input',
-      defaultValue: '',
+      defaultValue: storedData.password,
       inputProps: {
         placeholder: 'Password',
         inputRef: passwordInputRef,

@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FormDataItems, Schema, VoidFunction } from '../../../types/global';
+import { FormDataItems, Schema } from '../../../types/global';
 import { Form } from '../../../widgets';
+import { LoginForm } from '../../../store/reducers/formData';
 
 type Props = {
-  onSubmit: VoidFunction;
+  onSubmit: (formData: LoginForm) => void;
   formDataItems: FormDataItems;
   schema: Schema;
 };
