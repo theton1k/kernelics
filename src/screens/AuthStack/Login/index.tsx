@@ -20,6 +20,7 @@ const Login = () => {
     {
       fieldName: 'email',
       isRequired: true,
+      type: 'input',
       inputProps: {
         placeholder: 'Email',
         onSubmitEditing: onSubmitEmail,
@@ -32,6 +33,7 @@ const Login = () => {
     {
       fieldName: 'password',
       isRequired: true,
+      type: 'input',
       inputProps: {
         placeholder: 'Password',
         inputRef: passwordInputRef,

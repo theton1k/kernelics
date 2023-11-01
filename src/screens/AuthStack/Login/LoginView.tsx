@@ -4,8 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormDataItems, VoidFunction } from '../../../types/global';
 import { Form } from '../../../widgets';
 
-export type LoginInputData = Record<'password' | 'email', string>;
-
 type Props = {
   onSubmit: VoidFunction;
   formDataItems: FormDataItems;

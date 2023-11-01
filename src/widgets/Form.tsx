@@ -33,7 +33,7 @@ export default function Form(props: Props) {
       style={[styles.keyboardAvoidingWrapper, formWrapperStyle]}>
       <ScrollView style={styles.inputContainer}>
         {formDataItems.map(formDataItem => {
-          const { isRequired, inputProps, fieldName } = formDataItem;
+          const { isRequired, inputProps, fieldName, type } = formDataItem;
 
           return (
             <View key={fieldName}>
@@ -42,15 +42,41 @@ export default function Form(props: Props) {
                 rules={{
                   required: isRequired,
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Input
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    inputWrapperStyle={styles.inputWrapperStyle}
-                    {...inputProps}
-                  />
-                )}
+                render={({ field: { onChange, onBlur, value } }) => {
+                  if (type === 'datePicker') {
+                    return (
+                      <Input
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        inputWrapperStyle={styles.inputWrapperStyle}
+                        {...inputProps}
+                      />
+                    );
+                  }
+
+                  if (type === 'checkbox') {
+                    return (
+                      <Input
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        inputWrapperStyle={styles.inputWrapperStyle}
+                        {...inputProps}
+                      />
+                    );
+                  }
+
+                  return (
+                    <Input
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      inputWrapperStyle={styles.inputWrapperStyle}
+                      {...inputProps}
+                    />
+                  );
+                }}
                 name={fieldName}
               />
 
