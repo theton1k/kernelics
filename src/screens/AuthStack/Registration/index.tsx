@@ -28,9 +28,8 @@ const Registration = () => {
       inputProps: {
         placeholder: 'Full name',
         onSubmitEditing: onSubmitEditing(emailInputRef),
-        autoComplete: 'email',
-        keyboardType: 'email-address',
-        autoCorrect: false,
+        autoComplete: 'name',
+        autoCorrect: true,
         enterKeyHint: 'next',
       },
     },
