@@ -3,6 +3,7 @@ import { RefObject, useCallback, useRef } from 'react';
 import { TextInput } from 'react-native';
 import { FormDataItems } from '../../../types/global';
 import subYears from 'date-fns/subYears';
+import * as yup from 'yup';
 
 const now = new Date();
 const minDate = subYears(new Date(), 100);
@@ -27,7 +28,7 @@ const Registration = () => {
 
   const formDataItems: FormDataItems = [
     {
-      fieldName: 'fullName',
+      fieldName: 'name',
       isRequired: true,
       type: 'input',
       defaultValue: '',
@@ -67,6 +68,7 @@ const Registration = () => {
         autoCorrect: false,
         secureTextEntry: true,
         enterKeyHint: 'next',
+        textContentType: 'oneTimeCode',
       },
     },
     {
@@ -80,10 +82,11 @@ const Registration = () => {
         selectTextOnFocus: true,
         autoCorrect: false,
         secureTextEntry: true,
+        textContentType: 'oneTimeCode',
       },
     },
     {
-      fieldName: 'datePicker',
+      fieldName: 'birthDay',
       isRequired: true,
       type: 'datePicker',
       defaultValue: defaultDate,
@@ -114,7 +117,34 @@ const Registration = () => {
     },
   ];
 
-  return <RegistrationView formDataItems={formDataItems} onSubmit={onSubmit} />;
+  const schema = yup.object().shape({
+    name: yup.string().required('Name is a required field'),
+    email: yup.string().email().required('Email is a required field'),
+    password: yup
+      .string()
+      .min(8)
+      .max(32)
+      .required('Password is a required field'),
+    repeatPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), 'none'], 'Passwords must match'),
+    birthDay: yup
+      .date()
+      .max(maxDate, 'Age should be at least 18 years')
+      .min(minDate, 'Age should be less than 100 yeas'),
+    'T&C': yup
+      .boolean()
+      .isTrue('You should confirm T&C')
+      .required('You should confirm T&C'),
+  });
+
+  return (
+    <RegistrationView
+      formDataItems={formDataItems}
+      onSubmit={onSubmit}
+      schema={schema}
+    />
+  );
 };
 
 export default Registration;

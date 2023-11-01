@@ -2,6 +2,7 @@ import LoginView from './LoginView';
 import { useCallback, useRef } from 'react';
 import { TextInput } from 'react-native';
 import { FormDataItems } from '../../../types/global';
+import * as yup from 'yup';
 
 const Login = () => {
   const passwordInputRef = useRef<TextInput>(null);
@@ -46,7 +47,22 @@ const Login = () => {
     },
   ];
 
-  return <LoginView formDataItems={formDataItems} onSubmit={onSubmit} />;
+  const schema = yup.object().shape({
+    email: yup.string().email().required('Email is a required field'),
+    password: yup
+      .string()
+      .min(8)
+      .max(32)
+      .required('Password is a required field'),
+  });
+
+  return (
+    <LoginView
+      formDataItems={formDataItems}
+      schema={schema}
+      onSubmit={onSubmit}
+    />
+  );
 };
 
 export default Login;

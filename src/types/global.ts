@@ -1,5 +1,6 @@
 import { InputProps } from '../components/Input';
 import { DatePickerProps } from 'react-native-date-picker';
+import * as yup from 'yup';
 
 export type TextInputFunction = (newValue: string) => void;
 export type VoidFunction = () => void;
@@ -13,3 +14,5 @@ export type FormDataItems = {
   defaultValue?: string | boolean | Date;
   inputProps: Partial<InputProps> & Partial<DatePickerProps>;
 }[];
+
+export type Schema = yup.ObjectSchema<any>;

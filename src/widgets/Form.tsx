@@ -1,23 +1,25 @@
 import { ScrollView, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, DatePicker, Input } from '../components';
-import { FormDataItems } from '../types/global';
+import { FormDataItems, Schema } from '../types/global';
 import { KeyboardAvoidingWrapper } from '../hocs';
 import CheckBox from '../components/Checkbox';
 import { colors } from '../theme';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   formDataItems: FormDataItems;
   onSubmit: (data: any) => void;
   formWrapperStyle: ViewStyle;
+  schema: Schema;
 };
 
 export default function Form(props: Props) {
-  const { onSubmit, formDataItems, formWrapperStyle = {} } = props;
+  const { onSubmit, formDataItems, formWrapperStyle = {}, schema } = props;
 
   const defaultValues = formDataItems.reduce(
     (acc: Record<string, string | boolean | Date>, formDataItem) => {
-      acc[formDataItem.fieldName] = formDataItem.defaultValue || '';
+      acc[formDataItem.fieldName] = formDataItem.defaultValue ?? '';
 
       return acc;
     },
@@ -28,12 +30,14 @@ export default function Form(props: Props) {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues });
+  } = useForm({ defaultValues, resolver: yupResolver(schema) });
 
   return (
     <KeyboardAvoidingWrapper
       style={[styles.keyboardAvoidingWrapper, formWrapperStyle]}>
-      <ScrollView style={styles.inputContainer}>
+      <ScrollView
+        style={styles.inputContainer}
+        keyboardShouldPersistTaps={'handled'}>
         {formDataItems.map(formDataItem => {
           const { isRequired, inputProps, fieldName, type } = formDataItem;
 
@@ -63,7 +67,7 @@ export default function Form(props: Props) {
 
                     return (
                       <CheckBox
-                        value={value as boolean}
+                        value={!!value}
                         onChange={customChange}
                         placeholder={inputProps.placeholder}
                         checkboxWrapperStyle={styles.formItem}
@@ -87,7 +91,9 @@ export default function Form(props: Props) {
               />
 
               {errors[fieldName] && (
-                <Text style={styles.errorText}>This is required.</Text>
+                <Text style={styles.errorText}>
+                  {(errors[fieldName]?.message as string) || ''}
+                </Text>
               )}
             </View>
           );

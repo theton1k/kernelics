@@ -27,8 +27,6 @@ const CheckBox = (props: Props) => {
     error,
   } = props;
 
-  console.log('placeholder', placeholder);
-
   return (
     <TouchableOpacity
       style={[styles.container, checkboxWrapperStyle]}
