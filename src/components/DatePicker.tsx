@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+import RNDatePicker from 'react-native-date-picker';
 import { dateToHumanFormat } from '../utils';
 import { colors } from '../theme';
 
@@ -12,7 +12,7 @@ type Props = {
   error?: boolean;
 };
 
-export default (props: Props) => {
+const DatePicker = (props: Props) => {
   const {
     error,
     placeholder,
@@ -38,7 +38,7 @@ export default (props: Props) => {
       <>
         <Text>{placeholder}</Text>
 
-        <DatePicker
+        <RNDatePicker
           date={date}
           onConfirm={_onConfirm}
           open={open}
@@ -54,16 +54,19 @@ export default (props: Props) => {
 
 const styles = StyleSheet.create({
   wrapper: {
+    height: 48,
     borderWidth: 1,
     borderColor: colors.secondary,
     alignItems: 'center',
     justifyContent: 'space-between',
     textAlignVertical: 'center',
     flexDirection: 'row',
-    padding: 12,
+    paddingHorizontal: 12,
     borderRadius: 8,
   },
   error: {
     borderColor: colors.error,
   },
 });
+
+export default DatePicker;

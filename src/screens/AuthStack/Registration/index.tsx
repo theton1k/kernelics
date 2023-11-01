@@ -120,7 +120,7 @@ const Registration = () => {
       fieldName: 'T&C',
       isRequired: true,
       type: 'checkbox',
-      defaultValue: false,
+      defaultValue: storedData['T&C'],
       inputProps: {
         placeholder: 'I agree to Terms and Conditions',
       },
@@ -129,7 +129,7 @@ const Registration = () => {
       fieldName: 'ads',
       isRequired: false,
       type: 'checkbox',
-      defaultValue: false,
+      defaultValue: storedData.ads,
       inputProps: {
         placeholder:
           'I agree to receive ads and promotional material on the given email address',

@@ -54,7 +54,7 @@ const Input = (props: InputProps) => {
         {...inputProps}
       />
       {secureTextEntry && (
-        <TouchableOpacity onPress={toggleShowPassword}>
+        <TouchableOpacity onPress={toggleShowPassword} style={styles.eyeButton}>
           <Image
             source={showPassword ? eyeOutlineImage : eyeImage}
             style={styles.passwordEye}
@@ -71,8 +71,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.secondary,
     borderRadius: 8,
-    padding: 12,
+    paddingHorizontal: 12,
     flexDirection: 'row',
+    height: 48,
   },
   textInput: {
     flex: 1,
@@ -83,6 +84,9 @@ const styles = StyleSheet.create({
   },
   error: {
     borderColor: colors.error,
+  },
+  eyeButton: {
+    justifyContent: 'center',
   },
 });
 

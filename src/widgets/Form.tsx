@@ -56,6 +56,7 @@ export default function Form(props: Props) {
                         date={value as Date}
                         placeholder={inputProps.placeholder}
                         onConfirm={onChange}
+                        error={!!errors[fieldName]}
                       />
                     );
                   }
