@@ -18,6 +18,7 @@ type Props = {
   inputData: LoginInputData;
   onChangeEmail: TextInputFunction;
   onChangePassword: TextInputFunction;
+  saveDataToRedux: VoidFunction;
 };
 
 const LoginView = (props: Props) => {
@@ -27,6 +28,7 @@ const LoginView = (props: Props) => {
     inputData,
     onChangeEmail,
     onChangePassword,
+    saveDataToRedux,
   } = props;
 
   return (
@@ -42,6 +44,7 @@ const LoginView = (props: Props) => {
               value={inputData.email}
               onChangeText={onChangeEmail}
               enterKeyHint={'next'}
+              blurOnSubmit={false}
             />
 
             <Input
@@ -55,7 +58,7 @@ const LoginView = (props: Props) => {
           </View>
 
           <KeyboardAvoidingWrapper>
-            <Button title={'Login'} onPress={() => {}} />
+            <Button title={'Login'} onPress={saveDataToRedux} />
           </KeyboardAvoidingWrapper>
         </View>
       </TouchableWithoutFeedback>

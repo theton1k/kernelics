@@ -18,13 +18,15 @@ const Login = () => {
     setInputData(prev => ({ ...prev, email: newValue }));
   }, []);
 
-  const onSubmitEmail = () => {
+  const onSubmitEmail = useCallback(() => {
     if (!passwordInputRef.current) {
       return;
     }
 
     passwordInputRef.current.focus();
-  };
+  }, []);
+
+  const saveDataToRedux = useCallback(() => {}, []);
 
   return (
     <LoginView
@@ -33,6 +35,7 @@ const Login = () => {
       inputData={inputData}
       onChangePassword={onChangePassword}
       onChangeEmail={onChangeEmail}
+      saveDataToRedux={saveDataToRedux}
     />
   );
 };
