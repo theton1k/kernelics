@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-  Keyboard,
-  StyleSheet,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import { Button, Input, KeyboardAvoidingWrapper } from '../../../components';
+import { StyleSheet, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextInputFunction, VoidFunction } from '../../../types/global';
+import {
+  FormDataItems,
+  TextInputFunction,
+  VoidFunction,
+} from '../../../types/global';
+import { Form } from '../../../widgets';
 
 export type LoginInputData = Record<'password' | 'email', string>;
 
@@ -19,49 +17,19 @@ type Props = {
   onChangeEmail: TextInputFunction;
   onChangePassword: TextInputFunction;
   saveDataToRedux: VoidFunction;
+  formDataItems: FormDataItems;
 };
 
 const LoginView = (props: Props) => {
-  const {
-    onSubmitEmail,
-    passwordInputRef,
-    inputData,
-    onChangeEmail,
-    onChangePassword,
-    saveDataToRedux,
-  } = props;
+  const { formDataItems, saveDataToRedux } = props;
 
   return (
     <SafeAreaView style={styles.screenWrapper} edges={['bottom']}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.contentWrapper}>
-          <View style={styles.inputWrapper}>
-            <Input
-              autoComplete={'email'}
-              keyboardType={'email-address'}
-              autoCorrect={false}
-              onSubmitEditing={onSubmitEmail}
-              value={inputData.email}
-              onChangeText={onChangeEmail}
-              enterKeyHint={'next'}
-              blurOnSubmit={false}
-            />
-
-            <Input
-              inputRef={passwordInputRef}
-              autoComplete={'password'}
-              autoCorrect={false}
-              secureTextEntry={true}
-              value={inputData.password}
-              onChangeText={onChangePassword}
-            />
-          </View>
-
-          <KeyboardAvoidingWrapper>
-            <Button title={'Login'} onPress={saveDataToRedux} />
-          </KeyboardAvoidingWrapper>
-        </View>
-      </TouchableWithoutFeedback>
+      <Form
+        formDataItems={formDataItems}
+        onSubmit={saveDataToRedux}
+        formWrapperStyle={styles.formWrapperStyle}
+      />
     </SafeAreaView>
   );
 };
@@ -71,13 +39,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
   },
-  contentWrapper: {
-    flex: 1,
-    paddingTop: 24,
-  },
-  inputWrapper: {
-    flex: 1,
-    gap: 12,
+  formWrapperStyle: {
+    marginTop: 20,
   },
 });
 

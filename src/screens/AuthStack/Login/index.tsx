@@ -1,6 +1,7 @@
 import LoginView, { LoginInputData } from './LoginView';
 import { useCallback, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
+import { FormDataItems } from '../../../types/global';
 
 const Login = () => {
   const passwordInputRef = useRef<TextInput>(null);
@@ -28,6 +29,21 @@ const Login = () => {
 
   const saveDataToRedux = useCallback(() => {}, []);
 
+  const formDataItems: FormDataItems = [
+    {
+      fieldName: 'email',
+      placeholder: 'Email',
+      isRequired: true,
+      onSubmitEditing: onSubmitEmail,
+    },
+    {
+      fieldName: 'password',
+      placeholder: 'Password',
+      isRequired: true,
+      isSecured: true,
+    },
+  ];
+
   return (
     <LoginView
       onSubmitEmail={onSubmitEmail}
@@ -36,6 +52,7 @@ const Login = () => {
       onChangePassword={onChangePassword}
       onChangeEmail={onChangeEmail}
       saveDataToRedux={saveDataToRedux}
+      formDataItems={formDataItems}
     />
   );
 };

@@ -2,18 +2,17 @@ import React, { useRef, useState } from 'react';
 import {
   Image,
   Pressable,
-  StyleProp,
   StyleSheet,
   TextInput,
   TextInputProps,
   TouchableOpacity,
-  View,
+  ViewStyle,
 } from 'react-native';
 import { colors } from '../theme';
 import { eyeImage, eyeOutlineImage } from '../assets/images';
 
 type Props = Omit<TextInputProps, 'style'> & {
-  inputWrapperStyle?: StyleProp<View>;
+  inputWrapperStyle?: ViewStyle;
   inputRef?: React.RefObject<TextInput>;
 };
 

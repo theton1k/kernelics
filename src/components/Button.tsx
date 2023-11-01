@@ -1,4 +1,10 @@
-import { StyleProp, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import { colors, constants } from '../theme';
 import React from 'react';
 import { VoidFunction } from '../types/global';
@@ -6,8 +12,8 @@ import { VoidFunction } from '../types/global';
 type Props = {
   title: string;
   onPress: VoidFunction;
-  buttonStyle?: StyleProp<TouchableOpacity>;
-  titleStyle?: StyleProp<Text>;
+  buttonStyle?: ViewStyle;
+  titleStyle?: TextStyle;
 };
 
 const Button = (props: Props) => {
