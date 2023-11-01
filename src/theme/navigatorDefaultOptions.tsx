@@ -1,6 +1,6 @@
 import { colors } from './colors';
 
-export const navigatorDefaultProps = {
+export const navigatorDefaultOptions = {
   headerStyle: {
     backgroundColor: colors.primary,
   },
@@ -10,4 +10,7 @@ export const navigatorDefaultProps = {
   },
   headerTitleAlign: 'center' as 'center',
   headerTitleAllowFontScaling: false,
+  contentStyle: {
+    backgroundColor: colors.white,
+  },
 };

@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login, Registration, Welcome } from '../../screens/AuthStack';
 import { RootStackParamList } from '../types';
-import { navigatorDefaultProps } from '../../theme';
+import { navigatorDefaultOptions } from '../../theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -9,10 +9,22 @@ const Auth = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Welcome'}
-      screenOptions={navigatorDefaultProps}>
-      <Stack.Screen name={'Welcome'} component={Welcome} />
-      <Stack.Screen name={'Login'} component={Login} />
-      <Stack.Screen name={'Register'} component={Registration} />
+      screenOptions={navigatorDefaultOptions}>
+      <Stack.Screen
+        name={'Welcome'}
+        component={Welcome}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={'Login'}
+        component={Login}
+        options={{ title: 'Login' }}
+      />
+      <Stack.Screen
+        name={'Register'}
+        component={Registration}
+        options={{ title: 'Registration' }}
+      />
     </Stack.Navigator>
   );
 };

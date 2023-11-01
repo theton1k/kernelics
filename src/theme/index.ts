@@ -1,2 +1,3 @@
 export { colors } from './colors';
-export { navigatorDefaultProps } from './navigatorDefaultOptions';
+export { constants } from './constants';
+export { navigatorDefaultOptions } from './navigatorDefaultOptions';
