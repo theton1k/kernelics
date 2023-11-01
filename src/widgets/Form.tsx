@@ -33,13 +33,7 @@ export default function Form(props: Props) {
       style={[styles.keyboardAvoidingWrapper, formWrapperStyle]}>
       <ScrollView style={styles.inputContainer}>
         {formDataItems.map(formDataItem => {
-          const {
-            isRequired,
-            onSubmitEditing,
-            placeholder,
-            fieldName,
-            isSecured,
-          } = formDataItem;
+          const { isRequired, inputProps, fieldName } = formDataItem;
 
           return (
             <View key={fieldName}>
@@ -50,13 +44,11 @@ export default function Form(props: Props) {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    placeholder={placeholder}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
-                    onSubmitEditing={onSubmitEditing}
-                    secureTextEntry={isSecured}
                     inputWrapperStyle={styles.inputWrapperStyle}
+                    {...inputProps}
                   />
                 )}
                 name={fieldName}

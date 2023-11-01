@@ -11,16 +11,17 @@ import {
 import { colors } from '../theme';
 import { eyeImage, eyeOutlineImage } from '../assets/images';
 
-type Props = Omit<TextInputProps, 'style'> & {
+export type InputProps = Omit<TextInputProps, 'style'> & {
   inputWrapperStyle?: ViewStyle;
   inputRef?: React.RefObject<TextInput>;
 };
 
-const Input = (props: Props) => {
+const Input = (props: InputProps) => {
   const {
     inputWrapperStyle = {},
     secureTextEntry,
     inputRef,
+    onSubmitEditing,
     ...inputProps
   } = props;
 
@@ -47,6 +48,7 @@ const Input = (props: Props) => {
         ref={ref}
         {...props}
         secureTextEntry={showPassword}
+        blurOnSubmit={!onSubmitEditing}
         {...inputProps}
       />
       {secureTextEntry && (

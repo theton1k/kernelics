@@ -1,23 +1,10 @@
-import LoginView, { LoginInputData } from './LoginView';
-import { useCallback, useRef, useState } from 'react';
+import LoginView from './LoginView';
+import { useCallback, useRef } from 'react';
 import { TextInput } from 'react-native';
 import { FormDataItems } from '../../../types/global';
 
 const Login = () => {
   const passwordInputRef = useRef<TextInput>(null);
-
-  const [inputData, setInputData] = useState<LoginInputData>({
-    email: '',
-    password: '',
-  });
-
-  const onChangePassword = useCallback((newValue: string) => {
-    setInputData(prev => ({ ...prev, password: newValue }));
-  }, []);
-
-  const onChangeEmail = useCallback((newValue: string) => {
-    setInputData(prev => ({ ...prev, email: newValue }));
-  }, []);
 
   const onSubmitEmail = useCallback(() => {
     if (!passwordInputRef.current) {
@@ -27,34 +14,35 @@ const Login = () => {
     passwordInputRef.current.focus();
   }, []);
 
-  const saveDataToRedux = useCallback(() => {}, []);
+  const onSubmit = useCallback(() => {}, []);
 
   const formDataItems: FormDataItems = [
     {
       fieldName: 'email',
-      placeholder: 'Email',
       isRequired: true,
-      onSubmitEditing: onSubmitEmail,
+      inputProps: {
+        placeholder: 'Email',
+        onSubmitEditing: onSubmitEmail,
+        autoComplete: 'email',
+        keyboardType: 'email-address',
+        autoCorrect: false,
+        enterKeyHint: 'next',
+      },
     },
     {
       fieldName: 'password',
-      placeholder: 'Password',
       isRequired: true,
-      isSecured: true,
+      inputProps: {
+        placeholder: 'Password',
+        inputRef: passwordInputRef,
+        autoComplete: 'password',
+        autoCorrect: false,
+        secureTextEntry: true,
+      },
     },
   ];
 
-  return (
-    <LoginView
-      onSubmitEmail={onSubmitEmail}
-      passwordInputRef={passwordInputRef}
-      inputData={inputData}
-      onChangePassword={onChangePassword}
-      onChangeEmail={onChangeEmail}
-      saveDataToRedux={saveDataToRedux}
-      formDataItems={formDataItems}
-    />
-  );
+  return <LoginView formDataItems={formDataItems} onSubmit={onSubmit} />;
 };
 
 export default Login;
